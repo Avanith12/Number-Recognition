@@ -1,0 +1,43 @@
+import tensorflow as tf
+from tensorflow.keras.datasets import mnist
+
+# Load and preprocess the MNIST dataset
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
+x_train, x_test = x_train / 255.0, x_test / 255.0
+
+# Build the Neural Network model
+model = tf.keras.Sequential([
+    tf.keras.layers.Flatten(input_shape=(28, 28)),
+    tf.keras.layers.Dense(128, activation='relu'),
+    tf.keras.layers.Dense(10, activation='softmax')
+])
+
+# Compile the model
+model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+
+# Train the model
+model.fit(x_train, y_train, epochs=5)
+
+# Evaluate the model on the test data
+test_loss, test_accuracy = model.evaluate(x_test, y_test)
+print("Test accuracy:", test_accuracy)
+
+
+
+
+#output:
+Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz
+11490434/11490434 [==============================] - 0s 0us/step
+Epoch 1/5
+1875/1875 [==============================] - 15s 7ms/step - loss: 0.2566 - accuracy: 0.9266
+Epoch 2/5
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.1145 - accuracy: 0.9657
+Epoch 3/5
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.0787 - accuracy: 0.9761
+Epoch 4/5
+1875/1875 [==============================] - 7s 4ms/step - loss: 0.0588 - accuracy: 0.9817
+Epoch 5/5
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.0458 - accuracy: 0.9863
+313/313 [==============================] - 1s 2ms/step - loss: 0.0779 - accuracy: 0.9768
+Test accuracy: 0.9768000245094299
+
